@@ -19,7 +19,39 @@ namespace MovieMagic.Repositories {
         
         public async Task<MovieDetails> GetMovieByImdbId(string imdbId)
         {
-            throw new System.NotImplementedException();
+            string searchUrl = baseUrl + "i=" + imdbId;
+
+            var client = _clientFactory.CreateClient();
+
+            var resultTask = client.GetStreamAsync(searchUrl);
+            var result = await JsonSerializer.DeserializeAsync<OmdbDetail>(await resultTask);
+
+            var movie = new MovieDetails {
+                ImdbId = result.ImdbId,
+                Title = result.Title,
+                Plot = result.Plot,
+                Year = result.Year,
+                ReleaseDate = result.Released,
+                Actors = result.Actors,
+                Rating = result.Rated,
+                Director = result.Director
+            };
+
+            foreach (var ratingSource in result.Ratings) {
+                switch (ratingSource.Source) {
+                    case "Internet Movie Database":
+                        movie.ImdbRating = ratingSource.Value;
+                        break;
+                    case "Rotten Tomatoes":
+                        movie.RottenTomatoes = ratingSource.Value;
+                        break;
+                    case "Metacritic":
+                        movie.Metacritic = ratingSource.Value;
+                        break;
+                }
+            }
+
+            return movie;
         }
 
         public async Task<IEnumerable<SearchResult>> Search(string key)

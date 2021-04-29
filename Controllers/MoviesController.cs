@@ -78,5 +78,11 @@ namespace MovieMagic.Controllers
         public async Task<IEnumerable<SearchResult>> SearchMovies(string searchKey) {
             return await _searchService.Search(searchKey);
         }
+    
+    
+        [HttpGet("imdb/{imdbId}")]
+        public async Task<MovieDetails> GetByImdbId(string imdbId) {
+            return await _searchService.GetMovieByImdbId(imdbId);
+        }
     }
 }

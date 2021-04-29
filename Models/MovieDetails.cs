@@ -7,9 +7,9 @@ namespace MovieMagic.Models {
         public string ReleaseDate {get; set;}
         public string Plot {get; set;}
         public string Actors {get; set;}
+        public string Director {get;set;}
         public string RottenTomatoes {get; set;}
         public string ImdbRating {get; set;}
         public string Metacritic {get; set;}
-
     }
 }
