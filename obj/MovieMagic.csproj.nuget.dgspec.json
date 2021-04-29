@@ -1,30 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/Users/taylornewton/dev/MovieMagic/MovieMagic.csproj": {}
+    "/Users/taylor.newton/dev/Workshops/MovieMagicAPI/MovieMagic.csproj": {}
   },
   "projects": {
-    "/Users/taylornewton/dev/MovieMagic/MovieMagic.csproj": {
+    "/Users/taylor.newton/dev/Workshops/MovieMagicAPI/MovieMagic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/taylornewton/dev/MovieMagic/MovieMagic.csproj",
+        "projectUniqueName": "/Users/taylor.newton/dev/Workshops/MovieMagicAPI/MovieMagic.csproj",
         "projectName": "MovieMagic",
-        "projectPath": "/Users/taylornewton/dev/MovieMagic/MovieMagic.csproj",
-        "packagesPath": "/Users/taylornewton/.nuget/packages/",
-        "outputPath": "/Users/taylornewton/dev/MovieMagic/obj/",
+        "projectPath": "/Users/taylor.newton/dev/Workshops/MovieMagicAPI/MovieMagic.csproj",
+        "packagesPath": "/Users/taylor.newton/.nuget/packages/",
+        "outputPath": "/Users/taylor.newton/dev/Workshops/MovieMagicAPI/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/taylornewton/.nuget/NuGet/NuGet.Config"
+          "/Users/taylor.newton/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.github.com/RightNowMinistries/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -49,6 +45,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             }
           },
           "imports": [
@@ -69,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -34,7 +34,10 @@ namespace MovieMagic
             services.AddSingleton<IMovieDatabaseSettings>(s => s.GetRequiredService<IOptions<MovieDatabaseSettings>>().Value);
 
             services.AddScoped<IMovieRepository, MongoMovieRepository>();
+            services.AddScoped<IMovieSearch, OmdbMovieSearch>();
             
+            services.AddHttpClient();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
