@@ -15,62 +15,70 @@ namespace MovieMagic.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly ILogger<MoviesController> _logger;
-        private readonly IMovieRepository _movieRepository;
+        private readonly IMovieRepository _ratingRepository;
         private readonly IMovieSearch _searchService;
 
         public MoviesController(ILogger<MoviesController> logger, IMovieRepository repo, IMovieSearch searchService)
         {
             _logger = logger;
-            _movieRepository = repo;
+            _ratingRepository = repo;
             _searchService = searchService;
         }
 
         [HttpGet]
-        public IEnumerable<Movie> GetMovies()
+        public async Task<IEnumerable<Movie>> GetMovies()
         {
-            return _movieRepository.GetAllMovies();
+            return await _ratingRepository.GetAllMovies();
         }
 
-        [HttpGet, Route("{movieId}")]
-        public Movie GetMovieById(string movieId)
+        [HttpGet, Route("{imdbId}")]
+        public async Task<MovieDetails> GetMovieById(string imdbId)
         {
-            var movie = _movieRepository.GetMovieById(movieId);
+            var movieTask = _ratingRepository.GetMovieByExternalId(imdbId);
+            var movieDetailTask = _searchService.GetMovieByImdbId(imdbId);
 
-            if (movie == null) {
-                Response.StatusCode = (int) HttpStatusCode.NotFound;
-                return null;
-            }
+            await Task.WhenAll(movieTask, movieDetailTask);
 
-            return movie;
+            var movie = movieTask.Result;
+            var movieDetail = movieDetailTask.Result;
+
+            movieDetail.UserRating = movie?.Rating ?? 0;
+
+            // if (movie == null) {
+            //     Response.StatusCode = (int) HttpStatusCode.NotFound;
+            //     return null;
+            // }
+
+            return movieDetail;
         }
 
         [HttpPost]
-        public Movie CreateMovie(Movie movie) 
+        public async Task<Movie> CreateMovie(Movie movie) 
         {
             if (movie == null || !ModelState.IsValid) {
                 Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return null;
             }
 
-            var newMovie = _movieRepository.CreateMovie(movie);
+            var newMovie = await _ratingRepository.CreateMovie(movie);
             return newMovie;
         }
 
         [HttpPut, Route("{movieId}")]
-        public Movie UpdateMovie(Movie movie) 
+        public async Task<Movie> UpdateMovie(Movie movie) 
         {
             if (movie == null || !ModelState.IsValid) {
                 Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return null;
             }
             
-            var newMovie = _movieRepository.UpdateMovie(movie);
+            var newMovie = await _ratingRepository.UpdateMovie(movie);
             return newMovie;
         }
 
         [HttpDelete, Route("{movieId}")]
-        public void DeleteMovie(string movieId) {
-            _movieRepository.DeleteMovie(movieId);
+        public async Task DeleteMovie(string movieId) {
+            await _ratingRepository.DeleteMovie(movieId);
             Response.StatusCode = (int) HttpStatusCode.NoContent;
         }
 
@@ -80,9 +88,9 @@ namespace MovieMagic.Controllers
         }
     
     
-        [HttpGet("imdb/{imdbId}")]
-        public async Task<MovieDetails> GetByImdbId(string imdbId) {
-            return await _searchService.GetMovieByImdbId(imdbId);
-        }
+        // [HttpGet("imdb/{imdbId}")]
+        // public async Task<MovieDetails> GetByImdbId(string imdbId) {
+        //     return await _searchService.GetMovieByImdbId(imdbId);
+        // }
     }
 }

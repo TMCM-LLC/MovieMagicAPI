@@ -33,7 +33,7 @@ namespace MovieMagic.Repositories {
                 Year = result.Year,
                 ReleaseDate = result.Released,
                 Actors = result.Actors,
-                Rating = result.Rated,
+                FilmRating = result.Rated,
                 Director = result.Director
             };
 

@@ -4,7 +4,7 @@ using MovieMagic.Models;
 
 namespace MovieMagic.Repositories
 {
-    public class MockMovieRepository : IMovieRepository
+    public class MockMovieRepository 
     {
         private List<Movie> mockMovies;
 

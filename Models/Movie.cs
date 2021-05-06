@@ -14,5 +14,8 @@ namespace MovieMagic.Models {
         [Range(0, 5)]
         [BsonElement("Rating")]
         public int Rating { get; set; }
+        [Required]
+        [BsonElement("ExternalId")]
+        public string ExternalId { get; set; }
     }
 }
