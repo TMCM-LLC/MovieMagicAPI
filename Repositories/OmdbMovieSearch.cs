@@ -30,6 +30,7 @@ namespace MovieMagic.Repositories {
                 ImdbId = result.ImdbId,
                 Title = result.Title,
                 Plot = result.Plot,
+                Poster = result.Poster,
                 Year = result.Year,
                 ReleaseDate = result.Released,
                 Actors = result.Actors,
